@@ -74,6 +74,7 @@ public class classe extends JFrame{
 		
 	}
 	public void definirEventos() {
+		
 		miProj.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				criaProjeto();
@@ -89,6 +90,7 @@ public class classe extends JFrame{
 				abre();
 			}
 		});
+		
 	}
 	public void criaProjeto() {
 		
@@ -162,7 +164,7 @@ public class classe extends JFrame{
 			+ "<html> \n"
 			+ "<head> \n"
 			+ "<link rel='stylesheet' href='CSS/styles.css' \n"
-			+ "<title> \n"
+			+ "<title> "
 			+ "</title> \n"
 			+ "</head> \n"
 			+ "<body> \n"
