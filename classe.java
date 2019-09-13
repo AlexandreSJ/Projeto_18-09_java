@@ -13,16 +13,15 @@ public class classe extends JFrame{
 	private JLabel lb1;
 	private JTextPane ta1;
 	private FileDialog fdSave, fdOpen;
-	private String filename;
+	private String filename,salvar;
 	private JPanel pn1;
 	private JMenuBar mbBar;
 	private JMenu mnFile,mnColor,mnExamples;
-	private JMenuItem miOpen, miSave, miProj,miDark,miWhite;
+	private JMenuItem miOpen, miSave, miSaveAs, miProj,miDark,miWhite;
 	private JMenuItem miSizes,miFormatting,miPara;
 	private JScrollPane sppainel;
 	private boolean aviso = true;
 	private JTextArea lines;
-
 	private Color color = new Color(0,0,0);
 	StyleContext cont = StyleContext.getDefaultStyleContext();
     AttributeSet attr = cont.addAttribute(cont.getEmptySet(), StyleConstants.Foreground, new Color(173,71,172));
@@ -42,7 +41,7 @@ public class classe extends JFrame{
 	}
 	
 	public void inicializarComponentes() {
- 		setIconImage(iconeTitulo.getImage());
+		setIconImage(iconeTitulo.getImage());
 		try {
 			File dir = new File("c:/htmlidle");
 			if(!dir.exists()) {
@@ -51,6 +50,8 @@ public class classe extends JFrame{
 			File dir2 = new File("c:/htmlidle/exemplos");
 			if(!dir2.exists()) {
 				dir2.mkdir();
+				JOptionPane.showMessageDialog(pn1, "Pasta criada em C:\n"
+						+ "Nome: htmlidle");
 			}
 		}catch(Exception e) {
 			System.out.print(e);
@@ -128,10 +129,12 @@ public class classe extends JFrame{
 		
 		miOpen = new JMenuItem("Abrir");
 		miSave = new JMenuItem("Salvar");
+		miSaveAs = new JMenuItem("Salvar Como...");
 		miProj = new JMenuItem("Criar Projeto HTML+CSS+JS");
 		
 		mnFile.add(miOpen);
 		mnFile.add(miSave);
+		mnFile.add(miSaveAs);
 		mnFile.add(miProj);
 		
 		mnColor = new JMenu("Cores");
@@ -218,9 +221,6 @@ public class classe extends JFrame{
 		fdSave = new FileDialog(this, "Salvar arquivo", FileDialog.SAVE);
 		
 		pn1.add(sppainel);
-
-		JOptionPane.showMessageDialog(pn1, "Pasta criada em C:\n"
-				+ "Nome: htmlidle");
 		
 		add(pn1);
 	}
@@ -230,7 +230,11 @@ public class classe extends JFrame{
 		
 		miOpen.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.CTRL_DOWN_MASK));
 		
+		miSaveAs.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A,InputEvent.CTRL_DOWN_MASK));
+		
 		miProj.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+		
+
 		
 		miProj.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -240,6 +244,11 @@ public class classe extends JFrame{
 		miSave.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				salva();
+			}
+		});
+		miSaveAs.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				salvaComo();
 			}
 		});
 		miOpen.addActionListener(new ActionListener() {
@@ -362,21 +371,49 @@ public class classe extends JFrame{
 		}
 		
 	}
+
 	public void salva() {
+		try {
+			if(salvar == null) {
+				fdSave.setVisible(true);
+				if (fdSave.getFile() == null) {
+					return;
+				}
+				filename = fdSave.getDirectory()+fdSave.getFile();
+				salvar = "Texto";
+				FileWriter out = new FileWriter(filename);
+				out.write(ta1.getText());
+				out.close();
+			}else {
+				try {
+					FileWriter out = new FileWriter(filename);
+					out.write(ta1.getText());
+					out.close();		
+				}catch(IOException erra) {
+					JOptionPane.showMessageDialog(null,"Erro ao salvar arquivo "+erra.toString());					
+				}
+			}
+		} catch(IOException erro) {
+			JOptionPane.showMessageDialog(null,"Erro ao salvar arquivo "+erro.toString());
+		}	
+	}
+
+	public void salvaComo() {
 		try {
 			fdSave.setVisible(true);
 			if (fdSave.getFile() == null) {
 				return;
 			}
 			filename = fdSave.getDirectory()+fdSave.getFile();
+			salvar = "Texto";
 			FileWriter out = new FileWriter(filename);
 			out.write(ta1.getText());
 			out.close();
 		} catch(IOException erro) {
 			JOptionPane.showMessageDialog(null,"Erro ao salvar arquivo "+erro.toString());
-		}
-		
+		}	
 	}
+	
 	public void abre() {
 		int a = 0;
 		if(!ta1.getText().equals("")) {
@@ -389,8 +426,10 @@ public class classe extends JFrame{
 			try {
 				fdOpen.setVisible(true);
 				if (fdOpen.getFile() == null) {
+					salvar = "Texto";
 					return;
 				}
+				salvar = null;
 				filename = fdOpen.getDirectory()+fdOpen.getFile();
 				FileReader in = new FileReader(filename);
 				String s = "";
@@ -437,6 +476,7 @@ public class classe extends JFrame{
 			+ "		<h5>Eu sou um título h5</h5> \n"
 			+ "	</body> \n"
 			+ "</html>";
+	
 	private String Formatting = "<!DOCTYPE html> \n"
 			+ "<html> \n"
 			+ "	<head> \n"
