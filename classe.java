@@ -11,17 +11,18 @@ public class classe extends JFrame{
 	int dimx = 1200;
 	int dimy = 650;
 	private JLabel lb1;
-	private JTextPane ta1;
+	private JTextPane ta1, ta2, ta3, ta4;
 	private FileDialog fdSave, fdOpen;
 	private String filename;
-	private JPanel pn1;
+	private JPanel pn1, pn2, pn3, pn4;
 	private JMenuBar mbBar;
 	private JMenu mnFile,mnColor,mnExamples;
 	private JMenuItem miOpen, miSave, miProj,miDark,miWhite;
 	private JMenuItem miSizes,miFormatting,miPara;
-	private JScrollPane sppainel;
+	private JScrollPane sppainel, sppainel2, sppainel3, sppainel4;
 	private boolean aviso = true;
 	private JTextArea lines;
+	private JTabbedPane tp1, tp2, tp3, tp4;
 
 	private Color color = new Color(0,0,0);
 	StyleContext cont = StyleContext.getDefaultStyleContext();
@@ -121,7 +122,16 @@ public class classe extends JFrame{
             }
         };
 
-		
+        tp1 = new JTabbedPane();
+        tp2 = new JTabbedPane();
+        tp3 = new JTabbedPane();
+        tp4 = new JTabbedPane();
+        
+        tp1.addTab("Teste", new JPanel());
+        tp2.addTab("Teste", new JPanel());
+        tp3.addTab("Teste", new JPanel());
+        tp4.addTab("Teste", new JPanel());
+        
 		mbBar = new JMenuBar();
 		
 		mnFile = new JMenu("Arquivo");
@@ -160,17 +170,38 @@ public class classe extends JFrame{
 		pn1 = new JPanel(null);
 		pn1.setBackground(Color.LIGHT_GRAY);
 		pn1.setBounds(0,0,dimx,dimy);
+		pn2 = new JPanel(null);
+		pn2.setBackground(Color.LIGHT_GRAY);
+		pn2.setBounds(0,0,dimx,dimy);
+		pn3 = new JPanel(null);
+		pn3.setBackground(Color.LIGHT_GRAY);
+		pn3.setBounds(0,0,dimx,dimy);
+		pn4 = new JPanel(null);
+		pn4.setBackground(Color.LIGHT_GRAY);
+		pn4.setBounds(0,0,dimx,dimy);
 		
 		lb1 = new JLabel("Digite o texto abaixo");
 		lb1.setForeground(Color.BLACK);
 		lb1.setBounds(10,5,130,20);
-		pn1.add(lb1);
+		pn1.add(tp1);
+		pn2.add(tp2);
+		pn3.add(tp3);
+		pn4.add(tp3);
 			
 		ta1 = new JTextPane(doc);
+		ta2 = new JTextPane(doc);
+		ta3 = new JTextPane(doc);
+		ta4 = new JTextPane(doc);
 		
 		ta1.setForeground(Color.BLACK);
+		ta2.setForeground(Color.BLACK);
+		ta3.setForeground(Color.BLACK);
+		ta4.setForeground(Color.BLACK);
 		
 		sppainel = new JScrollPane(ta1);
+		sppainel2 = new JScrollPane(ta2);
+		sppainel3 = new JScrollPane(ta3);
+		sppainel4 = new JScrollPane(ta4);
 		
         lines = new JTextArea("1");
         
@@ -204,25 +235,123 @@ public class classe extends JFrame{
             }
 
         });
+        ta2.getDocument().addDocumentListener(new DocumentListener() {
+            public String getText() {
+                int caretPosition = ta2.getDocument().getLength();
+                Element root = ta2.getDocument().getDefaultRootElement();
+                String text = "1" + System.getProperty("line.separator");
+                for (int i = 2; i < root.getElementIndex(caretPosition) + 2; i++) {
+                    text += i + System.getProperty("line.separator");
+                }
+                return text;
+            }
 
+            @Override
+            public void changedUpdate(DocumentEvent de) {
+                lines.setText(getText());
+            }
+
+            @Override
+            public void insertUpdate(DocumentEvent de) {
+                lines.setText(getText());
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent de) {
+                lines.setText(getText());
+            }
+
+        });
+        ta3.getDocument().addDocumentListener(new DocumentListener() {
+            public String getText() {
+                int caretPosition = ta3.getDocument().getLength();
+                Element root = ta3.getDocument().getDefaultRootElement();
+                String text = "1" + System.getProperty("line.separator");
+                for (int i = 2; i < root.getElementIndex(caretPosition) + 2; i++) {
+                    text += i + System.getProperty("line.separator");
+                }
+                return text;
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent de) {
+                lines.setText(getText());
+            }
+
+            @Override
+            public void insertUpdate(DocumentEvent de) {
+                lines.setText(getText());
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent de) {
+                lines.setText(getText());
+            }
+
+        });
+        ta4.getDocument().addDocumentListener(new DocumentListener() {
+            public String getText() {
+                int caretPosition = ta4.getDocument().getLength();
+                Element root = ta4.getDocument().getDefaultRootElement();
+                String text = "1" + System.getProperty("line.separator");
+                for (int i = 2; i < root.getElementIndex(caretPosition) + 2; i++) {
+                    text += i + System.getProperty("line.separator");
+                }
+                return text;
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent de) {
+                lines.setText(getText());
+            }
+
+            @Override
+            public void insertUpdate(DocumentEvent de) {
+                lines.setText(getText());
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent de) {
+                lines.setText(getText());
+            }
+
+        });
         sppainel.getViewport().add(ta1);
         sppainel.setRowHeaderView(lines);
+        sppainel2.getViewport().add(ta2);
+        sppainel2.setRowHeaderView(lines);
+        sppainel3.getViewport().add(ta3);
+        sppainel3.setRowHeaderView(lines);
+        sppainel4.getViewport().add(ta4);
+        sppainel4.setRowHeaderView(lines);
         
         Font f = new Font("",Font.ITALIC,12);
         
         lines.setFont(f);
         
 		sppainel.setBounds(0,30,1185,558);
+		sppainel2.setBounds(0,30,1185,558);
+		sppainel3.setBounds(0,30,1185,558);
+		sppainel4.setBounds(0,30,1185,558);
 		
 		fdOpen = new FileDialog(this, "Abrir arquivo", FileDialog.LOAD);
 		fdSave = new FileDialog(this, "Salvar arquivo", FileDialog.SAVE);
 		
 		pn1.add(sppainel);
+		pn2.add(sppainel2);
+		pn3.add(sppainel3);
+		pn4.add(sppainel4);
 
 		JOptionPane.showMessageDialog(pn1, "Pasta criada em C:\n"
 				+ "Nome: htmlidle");
 		
-		add(pn1);
+		JPanel principal = new JPanel();
+		
+		principal.add(pn1);
+		principal.add(pn2);
+		principal.add(pn3);
+		principal.add(pn4);
+		
 	}
 	public void definirEventos() {
 		
@@ -251,20 +380,31 @@ public class classe extends JFrame{
 		miDark.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ta1.setBackground(Color.DARK_GRAY);
+				ta2.setBackground(Color.DARK_GRAY);
+				ta3.setBackground(Color.DARK_GRAY);
+				ta4.setBackground(Color.DARK_GRAY);
 				lines.setForeground(Color.WHITE);
 				color = new Color(255,255,255);
 				attrBlack = cont.addAttribute(cont.getEmptySet(), StyleConstants.Foreground, color);
 				ta1.setText(ta1.getText()+"");
-				
+				ta2.setText(ta2.getText()+"");
+				ta3.setText(ta3.getText()+"");
+				ta4.setText(ta4.getText()+"");
 			}
 		});
 		miWhite.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ta1.setBackground(Color.WHITE);
+				ta2.setBackground(Color.WHITE);
+				ta3.setBackground(Color.WHITE);
+				ta4.setBackground(Color.WHITE);
 				lines.setForeground(Color.BLACK);
 				color = new Color(0,0,0);
 				attrBlack = cont.addAttribute(cont.getEmptySet(), StyleConstants.Foreground, color);
 				ta1.setText(ta1.getText()+"");
+				ta2.setText(ta2.getText()+"");
+				ta3.setText(ta3.getText()+"");
+				ta4.setText(ta4.getText()+"");
 			}
 		});
 		
