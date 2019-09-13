@@ -17,7 +17,7 @@ public class classe extends JFrame{
 	private JPanel pn1;
 	private JMenuBar mbBar;
 	private JMenu mnFile,mnColor,mnExamples;
-	private JMenuItem miOpen, miSave, miProj,miDark,miWhite;
+	private JMenuItem miSintaxe, miOpen, miSave, miProj,miDark,miWhite;
 	private JMenuItem miSizes,miFormatting,miPara;
 	private JScrollPane sppainel;
 	private boolean aviso = true;
@@ -32,7 +32,7 @@ public class classe extends JFrame{
 	
 	public static void main (String Args[]) {
 		classe frame = new classe();
- 		frame.setTitle("IDE HTML GRUPO AMARELO");
+ 		frame.setTitle("UMBRA - IDE HTML");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
  		frame.setVisible(true);
 	}
@@ -55,6 +55,9 @@ public class classe extends JFrame{
 		}catch(Exception e) {
 			System.out.print(e);
 		}
+		
+		//Faltando criar FileWriter da mi "SINTAXE"
+		
 		try{
 			FileWriter out = new FileWriter("C:/htmlidle/exemplos/Tamanhos.html");
 			out.write(Basic);
@@ -95,7 +98,7 @@ public class classe extends JFrame{
 
                 while (wordR <= after) {
                     if (wordR == after || String.valueOf(text.charAt(wordR)).matches("\\W")) {
-                        if (text.substring(wordL, wordR).matches("(\\W)*(body|title|html|head|b|i|h1|h2|h3|h4|h5|hl|div|link|sub|sup|ins|br|p)"))
+                        if (text.substring(wordL, wordR).matches("(\\W)*(body|title|html|head|b|i|h1|h2|h3|h4|h5|hl|div|link|sub|sup|ins|br|p|a|br|img|style)"))
                             setCharacterAttributes(wordL, wordR - wordL, attr, false);
                         else
                             setCharacterAttributes(wordL, wordR - wordL, attrBlack, false);
@@ -142,12 +145,16 @@ public class classe extends JFrame{
 		mnColor.add(miDark);
 		mnColor.add(miWhite);
 		
+		
+		//Exemplos aqui
 		mnExamples = new JMenu("Exemplos");
 		
+		miSintaxe = new JMenuItem("Sintaxe");
 		miSizes = new JMenuItem("Tamanhos para títulos");
 		miFormatting = new JMenuItem("Formatos");
 		miPara = new JMenuItem("Parágrafos");
 		
+		mnExamples.add(miSintaxe);
 		mnExamples.add(miSizes);
 		mnExamples.add(miFormatting);
 		mnExamples.add(miPara);
@@ -167,8 +174,10 @@ public class classe extends JFrame{
 		pn1.add(lb1);
 			
 		ta1 = new JTextPane(doc);
-		
+		Font g = new Font(null,Font.BOLD,12);
+		ta1.setFont(g);; //Deixa a fonte como tamanho fixo
 		ta1.setForeground(Color.BLACK);
+		ta1.setText(html);
 		
 		sppainel = new JScrollPane(ta1);
 		
@@ -208,9 +217,8 @@ public class classe extends JFrame{
         sppainel.getViewport().add(ta1);
         sppainel.setRowHeaderView(lines);
         
-        Font f = new Font("",Font.ITALIC,12);
-        
-        lines.setFont(f);
+        lines.setBounds(0,50,10,10);
+        lines.setFont(g);
         
 		sppainel.setBounds(0,30,1185,558);
 		
@@ -269,6 +277,15 @@ public class classe extends JFrame{
 		});
 		
 		//Exemplos
+		miSintaxe.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ta1.setText(html);
+				if(aviso == true) {
+					JOptionPane.showMessageDialog(pn1, "Todos os exemplos estão salvos no diretório C:/htmlidle/exemplos");
+					aviso = false;
+				}
+			}
+		});
 		miSizes.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ta1.setText(Basic);
@@ -407,17 +424,16 @@ public class classe extends JFrame{
 			}
 		}
 	}
-
-	private String html = "<!DOCTYPE html> \n"
-			+ "<html> \n"
-			+ "<head> \n"
-			+ "<link rel='stylesheet' href='CSS/styles.css'> \n"
-			+ "<title> "
-			+ "</title> \n"
-			+ "</head> \n"
-			+ "<body> \n"
-			+ "</body> \n"
-			+ "</html> \n";
+	private String html = "<!DOCTYPE html> \n" 
+			+ "<html> \n" 
+			+ "<head> \n"  
+			+ "	<link rel='stylesheet' href='CSS/styles.css'> \n" 
+			+ "	<title></title> \n" 
+			+ "</head> \n" 
+			+ "<body>\n" 
+			+ " \n" 
+			+ "</body> \n" 
+			+ "</html>";
 
 	private String Basic = "<!DOCTYPE html> \n"
 			+ "<html> \n"
