@@ -18,7 +18,7 @@ public class classe extends JFrame{
 	private JMenuBar mbBar;
 	private JMenu mnFile,mnColor,mnExamples;
 	private JMenuItem miOpen, miSave, miSaveAs, miProj,miDark,miWhite;
-	private JMenuItem miSizes,miFormatting,miPara;
+	private JMenuItem miSintaxe,miSizes,miFormatting,miPara;
 	private JScrollPane sppainel;
 	private boolean aviso = true;
 	private JTextArea lines;
@@ -53,8 +53,20 @@ public class classe extends JFrame{
 				JOptionPane.showMessageDialog(pn1, "Pasta criada em C:\n"
 						+ "Nome: htmlidle");
 			}
+			File dir3 = new File("c:/htmlidle/projetos");
+			if(!dir3.exists()) {
+				dir3.mkdir();
+			}
 		}catch(Exception e) {
 			System.out.print(e);
+		}
+		
+		try{
+			FileWriter out = new FileWriter("C:/htmlidle/exemplos/Sintaxe.html");
+			out.write(html);
+			out.close();
+		}catch(Exception erro) {
+			System.out.print(erro);
 		}
 		try{
 			FileWriter out = new FileWriter("C:/htmlidle/exemplos/Tamanhos.html");
@@ -96,7 +108,7 @@ public class classe extends JFrame{
 
                 while (wordR <= after) {
                     if (wordR == after || String.valueOf(text.charAt(wordR)).matches("\\W")) {
-                        if (text.substring(wordL, wordR).matches("(\\W)*(body|title|html|head|b|i|h1|h2|h3|h4|h5|hl|div|link|sub|sup|ins|br|p)"))
+                        if (text.substring(wordL, wordR).matches("(\\W)*(body|title|html|head|b|i|h1|h2|h3|h4|h5|hl|div|link|sub|sup|ins|br|p|a|br|img|style)"))
                             setCharacterAttributes(wordL, wordR - wordL, attr, false);
                         else
                             setCharacterAttributes(wordL, wordR - wordL, attrBlack, false);
@@ -114,7 +126,7 @@ public class classe extends JFrame{
                 if (before < 0) before = 0;
                 int after = findFirstNonWordChar(text, offs);
 
-                if (text.substring(before, after).matches("(\\W)*(body|title|html|head|b|i|h1|h2|h3|h4|h5|hl|div|link|sub|sup|ins|br|p)")) {
+                if (text.substring(before, after).matches("(\\W)*(body|title|html|head|b|i|h1|h2|h3|h4|h5|hl|div|link|sub|sup|ins|br|p|a|br|img|style)")) {
                     setCharacterAttributes(before, after - before, attr, false);
                 } else {
                     setCharacterAttributes(before, after - before, attrBlack, false);
@@ -137,7 +149,7 @@ public class classe extends JFrame{
 		mnFile.add(miSaveAs);
 		mnFile.add(miProj);
 		
-		mnColor = new JMenu("Cores");
+		mnColor = new JMenu("Estilo");
 		
 		miDark = new JMenuItem("Modo Noturno");
 		miWhite = new JMenuItem("Desativar Modo Noturno");
@@ -147,10 +159,12 @@ public class classe extends JFrame{
 		
 		mnExamples = new JMenu("Exemplos");
 		
+		miSintaxe = new JMenuItem("Sintaxe");
 		miSizes = new JMenuItem("Tamanhos para títulos");
 		miFormatting = new JMenuItem("Formatos");
 		miPara = new JMenuItem("Parágrafos");
 		
+		mnExamples.add(miSintaxe);
 		mnExamples.add(miSizes);
 		mnExamples.add(miFormatting);
 		mnExamples.add(miPara);
@@ -278,6 +292,15 @@ public class classe extends JFrame{
 		});
 		
 		//Exemplos
+		miSintaxe.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ta1.setText(html);
+				if(aviso == true) {
+					JOptionPane.showMessageDialog(pn1, "Todos os exemplos estão salvos no diretório C:/htmlidle/exemplos");
+					aviso = false;
+				}
+			}
+		});
 		miSizes.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ta1.setText(Basic);
@@ -330,7 +353,7 @@ public class classe extends JFrame{
 		String name = JOptionPane.showInputDialog(pn1,"Digite o nome do projeto");
 		if(name == null){
 		}else {
-			File dir = new File("c:/"+name);
+			File dir = new File("c:/htmlidle/projetos/"+name);
 			if (!dir.exists()) {
 				dir.mkdir();
 			}
@@ -364,7 +387,7 @@ public class classe extends JFrame{
 				FileWriter out = new FileWriter(dir+"/javascript.js");
 				out.write("//code here... \n");
 				out.close();
-				JOptionPane.showMessageDialog(pn1,"Projeto salvo em c:");
+				JOptionPane.showMessageDialog(pn1,"Projeto salvo em c:/htmlidle/Projetos");
 			}catch(IOException erro) {
 				JOptionPane.showMessageDialog(null, "Erro ao criar o projeto "+erro);
 			}
@@ -447,6 +470,7 @@ public class classe extends JFrame{
 		}
 	}
 
+	
 	private String html = "<!DOCTYPE html> \n"
 			+ "<html> \n"
 			+ "<head> \n"
