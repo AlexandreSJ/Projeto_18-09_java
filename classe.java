@@ -31,7 +31,7 @@ public class classe extends JFrame{
 	
 	public static void main (String Args[]) {
 		classe frame = new classe();
- 		frame.setTitle("IDE HTML GRUPO AMARELO");
+ 		frame.setTitle("UMBRA - IDE HTML");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
  		frame.setVisible(true);
 	}
