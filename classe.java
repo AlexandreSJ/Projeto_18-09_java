@@ -11,7 +11,7 @@ public class classe extends JFrame{
 	int dimy = 650;
 
 	private JTextPane ta1, ta2, ta3, ta4;
-	private FileDialog fdSave, fdOpen;
+	private FileDialog fdSave,fdSave2,fdSave3,fdSave4, fdOpen;
 	private String filename,filename2,filename3,filename4,salvar,salvar2,salvar3,salvar4;
 	private JPanel pn1, pn2, pn3, pn4;
 	private JMenuBar mbBar;
@@ -29,6 +29,9 @@ public class classe extends JFrame{
     AttributeSet attrBlack = cont.addAttribute(cont.getEmptySet(), StyleConstants.Foreground, color);
     
 	ImageIcon iconeTitulo = new ImageIcon(getClass().getResource("icone.png"));
+	ImageIcon spawn = new ImageIcon(getClass().getResource("bg.jpg"));
+	
+	JLabel lbspawn = new JLabel(spawn);
 	
 	public static void main (String Args[]) {
 		classe frame = new classe();
@@ -276,8 +279,10 @@ public class classe extends JFrame{
 		mnColor.add(miDark);
 		mnColor.add(miWhite);
 		
-		tb1 = new JTabbedPane();
+		Font f2 = new Font("Sans-Serif",Font.PLAIN,12);
 		
+		tb1 = new JTabbedPane();
+
 		mnExamples = new JMenu("Exemplos");
 		
 		miSintaxe = new JMenuItem("Sintaxe");
@@ -328,6 +333,11 @@ public class classe extends JFrame{
 		ta4 = new JTextPane(doc3);
 		ta4.setForeground(Color.BLACK);
 		ta4.setText(ta4.getText()+"");
+
+		ta1.setFont(f2);
+		ta2.setFont(f2);
+		ta3.setFont(f2);
+		ta4.setFont(f2);
 		
 		sppainel = new JScrollPane(ta1);
 		sppainel2 = new JScrollPane(ta2);
@@ -469,13 +479,13 @@ public class classe extends JFrame{
         Font f = new Font("",Font.ITALIC,12);
         
         lines.setBounds(0,5,10,10);
-        lines.setFont(f);
+        lines.setFont(f2);
         lines2.setBounds(0,5,10,10);
-        lines2.setFont(f);
+        lines2.setFont(f2);
         lines3.setBounds(0,5,10,10);
-        lines3.setFont(f);
+        lines3.setFont(f2);
         lines4.setBounds(0,5,10,10);
-        lines4.setFont(f);
+        lines4.setFont(f2);
         
 		sppainel.setBounds(0,0,1185,558);
 		sppainel2.setBounds(0,0,1185,558);
@@ -497,7 +507,15 @@ public class classe extends JFrame{
 		
 		tb1.setBounds(0,0,dimx,dimy);
 		
+		lbspawn.setBounds(0,0,dimx,dimy);
+
+		add(lbspawn);
+
 		add(tb1);
+		
+		tb1.setVisible(false);
+		
+		new Delay().start();
 		
 		ta1.setText(html);
 		ta2.setText(Basic);
@@ -541,7 +559,6 @@ public class classe extends JFrame{
 				ta2.setBackground(Color.DARK_GRAY);
 				ta3.setBackground(Color.DARK_GRAY);
 				ta4.setBackground(Color.DARK_GRAY);
-				lines.setForeground(Color.WHITE);
 				color = new Color(255,255,255);
 				attrBlack = cont.addAttribute(cont.getEmptySet(), StyleConstants.Foreground, color);
 				ta1.setText(ta1.getText()+"");
@@ -556,11 +573,6 @@ public class classe extends JFrame{
 				ta2.setBackground(Color.WHITE);
 				ta3.setBackground(Color.WHITE);
 				ta4.setBackground(Color.WHITE);
-				lines.setForeground(Color.BLACK);
-				lines2.setForeground(Color.BLACK);
-				lines3.setForeground(Color.BLACK);
-				lines4.setForeground(Color.BLACK);
-				lines.setForeground(Color.BLACK);
 				color = new Color(0,0,0);
 				attrBlack = cont.addAttribute(cont.getEmptySet(), StyleConstants.Foreground, color);
 				ta1.setText(ta1.getText()+"");
@@ -733,37 +745,37 @@ public class classe extends JFrame{
 				out.close();
 			}
 			else if(salvar2 == null && tb1.getSelectedIndex() == 1) {
-				fdSave.setVisible(true);
-				if (fdSave.getFile() == null) {
+				fdSave2.setVisible(true);
+				if (fdSave2.getFile() == null) {
 					return;
 				}
-				filename2 = fdSave.getDirectory()+fdSave.getFile();
+				filename2 = fdSave2.getDirectory()+fdSave2.getFile();
 				salvar2 = "Texto";
-				tb1.setTitleAt(1, fdSave.getFile());
+				tb1.setTitleAt(1, fdSave2.getFile());
 				FileWriter out = new FileWriter(filename2);
 				out.write(ta2.getText());
 				out.close();
 			}
 			else if(salvar3 == null && tb1.getSelectedIndex() == 2) {
-				fdSave.setVisible(true);
-				if (fdSave.getFile() == null) {
+				fdSave3.setVisible(true);
+				if (fdSave3.getFile() == null) {
 					return;
 				}
-				filename3 = fdSave.getDirectory()+fdSave.getFile();
+				filename3 = fdSave3.getDirectory()+fdSave3.getFile();
 				salvar3 = "Texto";
-				tb1.setTitleAt(2, fdSave.getFile());
+				tb1.setTitleAt(2, fdSave3.getFile());
 				FileWriter out = new FileWriter(filename3);
 				out.write(ta3.getText());
 				out.close();
 			}
 			else if(salvar4 == null && tb1.getSelectedIndex() == 3) {
-				fdSave.setVisible(true);
+				fdSave4.setVisible(true);
 				if (fdSave.getFile() == null) {
 					return;
 				}
-				filename4 = fdSave.getDirectory()+fdSave.getFile();
+				filename4 = fdSave4.getDirectory()+fdSave4.getFile();
 				salvar4 = "Texto";
-				tb1.setTitleAt(3, fdSave.getFile());
+				tb1.setTitleAt(3, fdSave4.getFile());
 				FileWriter out = new FileWriter(filename4);
 				out.write(ta4.getText());
 				out.close();
@@ -803,11 +815,11 @@ public class classe extends JFrame{
 
 	public void salvaComo() {
 		try {
-			fdSave.setVisible(true);
-			if (fdSave.getFile() == null) {
-				return;
-			}
 			if(tb1.getSelectedIndex() == 0) {
+				fdSave.setVisible(true);
+				if (fdSave.getFile() == null) {
+					return;
+				}
 				filename = fdSave.getDirectory()+fdSave.getFile();
 				salvar = "Texto";
 				tb1.setTitleAt(0, fdSave.getFile());
@@ -816,25 +828,37 @@ public class classe extends JFrame{
 				out.close();
 			}
 			else if(tb1.getSelectedIndex() == 1) {
-				filename2 = fdSave.getDirectory()+fdSave.getFile();
+				fdSave2.setVisible(true);
+				if (fdSave2.getFile() == null) {
+					return;
+				}
+				filename2 = fdSave2.getDirectory()+fdSave2.getFile();
 				salvar2 = "Texto";
-				tb1.setTitleAt(1, fdSave.getFile());
+				tb1.setTitleAt(1, fdSave2.getFile());
 				FileWriter out = new FileWriter(filename2);
 				out.write(ta1.getText());
 				out.close();
 			}
 			else if(tb1.getSelectedIndex() == 2) {
-				filename3 = fdSave.getDirectory()+fdSave.getFile();
+				fdSave3.setVisible(true);
+				if (fdSave3.getFile() == null) {
+					return;
+				}
+				filename3 = fdSave3.getDirectory()+fdSave3.getFile();
 				salvar3 = "Texto";
-				tb1.setTitleAt(2, fdSave.getFile());
+				tb1.setTitleAt(2, fdSave3.getFile());
 				FileWriter out = new FileWriter(filename3);
 				out.write(ta1.getText());
 				out.close();
 			}
 			else if(tb1.getSelectedIndex() == 3) {
-				filename4 = fdSave.getDirectory()+fdSave.getFile();
+				fdSave4.setVisible(true);
+				if (fdSave4.getFile() == null) {
+					return;
+				}
+				filename4 = fdSave4.getDirectory()+fdSave4.getFile();
 				salvar4 = "Texto";
-				tb1.setTitleAt(3, fdSave.getFile());
+				tb1.setTitleAt(3, fdSave4.getFile());
 				FileWriter out = new FileWriter(filename4);
 				out.write(ta1.getText());
 				out.close();
@@ -934,11 +958,11 @@ public class classe extends JFrame{
 		}
 	}
 
-	
+
 	private String html = "<!DOCTYPE html> \n"
 			+ "<html> \n"
 			+ "<head> \n"
-			+ "<link rel='stylesheet' href='CSS/styles.css'> \n"
+			+ "<link rel=\"stylesheet\" href=\"CSS/styles.css\"> \n"
 			+ "<title> "
 			+ "</title> \n"
 			+ "</head> \n"
@@ -949,7 +973,7 @@ public class classe extends JFrame{
 	private String Basic = "<!DOCTYPE html> \n"
 			+ "<html> \n"
 			+ "	<head> \n"
-			+ "	<link rel='stylesheet' href='CSS/styles.css'> \n"
+			+ "	<link rel=\"stylesheet\" href=\"CSS/styles.css\"> \n"
 			+ "	<title>Eu sou um título</title> \n"
 			+ "	</head> \n"
 			+ "	<body> \n"
@@ -968,7 +992,7 @@ public class classe extends JFrame{
 	private String Formatting = "<!DOCTYPE html> \n"
 			+ "<html> \n"
 			+ "	<head> \n"
-			+ "	<link rel='stylesheet' href='CSS/styles.css'> \n"
+			+ "	<link rel=\"stylesheet\" href=\"CSS/styles.css\"> \n"
 			+ "	<title></title> \n"
 			+ "	</head> \n"
 			+ "	<body> \n"
@@ -984,11 +1008,22 @@ public class classe extends JFrame{
 	private String Paragraphs = "<!DOCTYPE html> \n"
 			+ "<html> \n"
 			+ "	<head> \n"
-			+ "	<link rel='stylesheet' href='CSS/styles.css'> \n"
+			+ "	<link rel=\"stylesheet\" href=\"CSS/styles.css\"> \n"
 			+ "	<title></title> \n"
 			+ "	</head> \n"
 			+ "	<body> \n"
 			+ "		<p>Eu sou um parágrafo</p> \n"
 			+ "	</body> \n"
 			+ "</html>";
+	
+	public class Delay extends Thread{
+		public void run() {
+			try{
+				Thread.sleep(4000);
+				lbspawn.setVisible(false);
+				tb1.setVisible(true);
+			}catch(Exception ste) {
+			}
+		}
+	}
 }
